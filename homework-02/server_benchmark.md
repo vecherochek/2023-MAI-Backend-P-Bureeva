@@ -1,9 +1,9 @@
 # Tест производительности
 
-- [gunicorn](##gunicorn)
-- [gunicorn через проксирование nginx](##gunicornчерезпроксированиеnginx)
-- [nginx](##nginx)
-- [nginx статический файл](##nginxстатическийфайл)
+- [gunicorn](#gunicorn)
+- [gunicorn через проксирование nginx](#gunicorn-через-проксирование-nginx)
+- [nginx](#nginx)
+- [nginx статический файл](#nginx-статический-файл)
 
 
 ## gunicorn

@@ -18,9 +18,9 @@ class LRUCache:
             self.data[key] = value
             return
 
+        self.data[key] = value
         if len(self.data) == self.capacity:
             self.data.popitem(last=False)
-        self.data[key] = value
 
     def rem(self, key: str) -> None:
         if key in self.data:

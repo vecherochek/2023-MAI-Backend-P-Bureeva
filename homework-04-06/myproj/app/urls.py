@@ -19,7 +19,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('planet/<int:planet_id>', views.planet, name='planet'),
-    path('moon/<int:moon_id>', views.moon, name='moon'),
-    path('systems', views.astronomical_systems, name='astronomical_systems')
+    path('students/', views.students, name='students'),
+    path('subjects/', views.subjects, name='subjects'),
+    path('transcripts/', views.transcripts, name='transcripts')
 ]

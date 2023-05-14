@@ -2,29 +2,34 @@ version: "3.9"
 
 networks:
   db:
+    driver: bridge
 
 services:
 
   django:
-     build: ./myproj
-     command: sh -c "python manage.py runserver 0.0.0.0:8000"
-     ports:
-        - "8000:8000"
-     restart: always
-     networks:
-       - db
+    build: ./myproj
+    command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: [ "CMD", "curl", "--fail", "http://localhost:8000/app/students/" ]
+      interval: 3s
+      timeout: 5s
+    depends_on:
+      - postgres
+    networks:
+      - db
 
   nginx:
-     build:
-       context: ./nginx
-     ports:
-       - "8080:80"
-     restart: always
-     environment:
-       - NGINX_PORT=80
-     depends_on:
-       - django
-     networks:
+    build:
+      context: ./nginx
+    ports:
+      - "8080:80"
+    environment:
+      - NGINX_PORT=80
+    depends_on:
+      - django
+    networks:
       - db
 
   postgres:
@@ -32,9 +37,18 @@ services:
     image: postgres:latest
     ports:
       - "5432:5432"
-    restart: always
     environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "qwerty"
+      POSTGRES_DB: studentsdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: qwerty
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "echo 'SELECT 1;' | psql -U postgres -d studentsdb" ]
+      interval: 3s
+      timeout: 5s
     networks:
       - db
+
+# docker exec -it homework-04-06-django-1  python manage.py showmigrations

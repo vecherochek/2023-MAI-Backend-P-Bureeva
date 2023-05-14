@@ -28,7 +28,7 @@ def moon(request, moon_id):
     return JsonResponse(moon_info, safe=False)
 
 
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["GET"])
 def astronomical_systems(request):
     if request.method == "GET":
         systems = [

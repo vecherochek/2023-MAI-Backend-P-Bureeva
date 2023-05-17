@@ -12,7 +12,7 @@ services:
     ports:
       - "8000:8000"
     healthcheck:
-      test: [ "CMD", "curl", "--fail", "http://localhost:8000/app/students/" ]
+      test: [ "CMD", "curl", "--fail", "http://localhost:8000/app/all_students/" ]
       interval: 3s
       timeout: 5s
     depends_on:
